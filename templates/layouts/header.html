@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        {% if title %}
+            {{ title }}
+        {% else %}
+            {{ title }}
+        {% endif %}
+    </title>
+    <link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/jquery.smartmenus.bootstrap.css' %}" rel="stylesheet">
+    <!-- Product view slider -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.simpleLens.css' %}">
+    <!-- slick slider -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/slick.css' %}">
+    <!-- price picker slider -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/nouislider.css' %}">
+    <!-- Theme color -->
+    <link id="switcher" href="{% static 'css/theme-color/default-theme.css' %}" rel="stylesheet">
+    <link href="{% static 'css/sequence-theme.modern-slide-in.css' %}" rel="stylesheet" media="all">
+
+    <!-- Main style sheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <!-- Google Font -->
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<!-- Start header section -->
+<header id="aa-header">
+    <!-- start header top  -->
+    <div class="aa-header-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="aa-header-top-area">
+                        <!-- start header top left -->
+                        <div class="aa-header-top-left">
+                            <!-- start cellphone -->
+                            <div class="cellphone hidden-xs">
+                                <p><span class="fa fa-phone"></span> {{ settingData.c_phone }}</p>
+                            </div>
+                            <!-- / cellphone -->
+                        </div>
+                        <!-- / header top left -->
+                        <div class="aa-header-top-right">
+                            <ul class="aa-head-top-nav-right">
+                                <li><a href="account.html">My Account</a></li>
+                                <li class="hidden-xs"><a href="wishlist.html">Wishlist</a></li>
+                                <li class="hidden-xs"><a href="cart.html">My Cart</a></li>
+                                <li class="hidden-xs"><a href="checkout.html">Checkout</a></li>
+                                <li><a href="" data-toggle="modal" data-target="#login-modal">Login</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / header top  -->
+
+    <!-- start header bottom  -->
+    <div class="aa-header-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="aa-header-bottom-area">
+                        <!-- logo  -->
+                        <div class="aa-logo">
+                            <!-- Text based logo -->
+                            <a href="{% url 'index' %}">
+                                <span class="fa fa-shopping-cart"></span>
+                                <p> {{ settingData.get_company_name }}</p>
+                            </a>
+                            <!-- img based logo -->
+                            <!-- <a href="index.html"><img src="img/logo.jpg" alt="logo img"></a> -->
+                        </div>
+                        <!-- / logo  -->
+                        <!-- cart box -->
+                        <div class="aa-cartbox">
+                            <a class="aa-cart-link" href="#">
+                                <span class="fa fa-shopping-basket"></span>
+                                <span class="aa-cart-title">SHOPPING CART</span>
+                                <span class="aa-cart-notify">2</span>
+                            </a>
+                            <div class="aa-cartbox-summary">
+                                <ul>
+                                    <li>
+                                        <a class="aa-cartbox-img" href="#"><img src="img/woman-small-2.jpg"
+                                                                                alt="img"></a>
+                                        <div class="aa-cartbox-info">
+                                            <h4><a href="#">Product Name</a></h4>
+                                            <p>1 x $250</p>
+                                        </div>
+                                        <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
+                                    </li>
+                                    <li>
+                                        <a class="aa-cartbox-img" href="#"><img src="img/woman-small-1.jpg"
+                                                                                alt="img"></a>
+                                        <div class="aa-cartbox-info">
+                                            <h4><a href="#">Product Name</a></h4>
+                                            <p>1 x $250</p>
+                                        </div>
+                                        <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
+                                    </li>
+                                    <li>
+                      <span class="aa-cartbox-total-title">
+                        Total
+                      </span>
+                                        <span class="aa-cartbox-total-price">
+                        $500
+                      </span>
+                                    </li>
+                                </ul>
+                                <a class="aa-cartbox-checkout aa-primary-btn" href="checkout.html">Checkout</a>
+                            </div>
+                        </div>
+                        <!-- / cart box -->
+                        <!-- search box -->
+                        <div class="aa-search-box">
+                            <form action="">
+                                <input type="text" name="" id="" placeholder="Search here ex. 'man' ">
+                                <button type="submit"><span class="fa fa-search"></span></button>
+                            </form>
+                        </div>
+                        <!-- / search box -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / header bottom  -->
+</header>
+<!-- / header section -->

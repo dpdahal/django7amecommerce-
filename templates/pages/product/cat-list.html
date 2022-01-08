@@ -1,0 +1,124 @@
+{% extends 'master/master.html' %}
+
+{% block content %}
+
+    <!-- catg header banner section -->
+    <section id="aa-catg-head-banner">
+        <img src="img/fashion/fashion-header-bg-8.jpg" alt="fashion img">
+        <div class="aa-catg-head-banner-area">
+            <div class="container">
+                <div class="aa-catg-head-banner-content">
+                    <h2>Cart Page</h2>
+                    <ol class="breadcrumb">
+                        <li><a href="index.html">Home</a></li>
+                        <li class="active">Cart</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- / catg header banner section -->
+
+    <!-- Cart view section -->
+    <section id="cart-view">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    {% if messages %}
+                        {% for messsage in messages %}
+                            <div class="alert alert-success">{{ messsage }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                {% if allCartData.cartproduct_set.all %}
+                    <div class="col-md-12">
+
+                        <div class="cart-view-area">
+                            <div class="cart-view-table">
+                                <form action="">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>S.n</th>
+                                                <th>Product</th>
+                                                <th>Image</th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>
+                                                <th>Sub Total</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for cart in allCartData.cartproduct_set.all %}
+                                                <tr>
+                                                    <td>
+                                                        {{ forloop.counter }}
+                                                    </td>
+                                                    <td>
+                                                        {{ cart.product.product_name }}
+                                                    </td>
+                                                    <td>
+                                                        <img src="{{ cart.product.product_image.url }}" width="30"
+                                                             alt="">
+                                                    </td>
+                                                    <td>{{ cart.rate }}</td>
+                                                    <td>{{ cart.quantity }}</td>
+                                                    <td>{{ cart.sub_total }}</td>
+                                                    <td>
+                                                        <a href="{% url 'increment-quantity' cart.id %}"
+                                                           class="btn btn-success">+</a>
+                                                        <a href="{% url 'decrement-quantity' cart.id %}"
+                                                           class="btn btn-warning">-</a>
+                                                        <a href="{% url 'delete-quantity' cart.id %}"
+                                                           class="btn btn-danger">x</a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+
+                                            </tbody>
+                                            {% if allCartData.cartproduct_set.all %}
+                                                <tfoot>
+                                                <tr>
+
+                                                    <td colspan="7">
+                                                        <a href="{% url 'clear-cart' %}" class="btn btn-danger">Clear
+                                                            Cart</a></td>
+                                                </tr>
+                                                </tfoot>
+                                            {% endif %}
+
+                                        </table>
+                                    </div>
+                                </form>
+                                <!-- Cart Total view -->
+                                <div class="cart-view-total">
+                                    <h4>Cart Totals</h4>
+                                    <table class="aa-totals-table">
+                                        <tbody>
+                                        <tr>
+                                            <th>Total</th>
+                                            <td>{{ allCartData.total }}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <a href="#" class="aa-cart-view-btn">Proced to Checkout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col-md-12">
+                        <h1>No cart items add</h1>
+                    </div>
+
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    <!-- / Cart view section -->
+
+
+{% endblock %}
