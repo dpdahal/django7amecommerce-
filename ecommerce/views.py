@@ -1,6 +1,10 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .models import *
 from django.contrib import messages
+from django.db.models import Q
+from .forms import BuyerForm
+from django.contrib.auth.models import User
+from django.contrib.auth import login, logout, authenticate
 
 
 # Create your views here.
@@ -134,3 +138,91 @@ def clear_cart(request):
     cart.save()
     messages.success(request, "Cart was successfully remove")
     return redirect(request.META.get('HTTP_REFERER'))
+
+
+def checkout(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        address = request.POST['address']
+        phone = request.POST['phone']
+        product_unique_cart_id = request.session.get('product_unique_cart_key')
+        cat_obj = UniqueCart.objects.get(id=product_unique_cart_id)
+        order_object = Order.objects.create(
+            name=name, email=email, address=address, phone=phone, rate=cat_obj.total, sub_total=cat_obj.total,
+            cart=UniqueCart.objects.get(id=cat_obj.id)
+        )
+        order_object.save()
+        del request.session['product_unique_cart_key']
+        return redirect('index')
+
+    else:
+        product_unique_cart_id = request.session.get('product_unique_cart_key')
+        if product_unique_cart_id:
+            data = UniqueCart.objects.get(id=product_unique_cart_id)
+            content = {
+                'allCartData': data
+            }
+            return render(request, 'pages/product/checkout.html', content)
+        else:
+            return redirect('index')
+
+
+def product(request):
+    content = {
+        'productData': Product.objects.all()
+    }
+    return render(request, 'pages/product/product.html', content)
+
+
+def search_product(request):
+    if request.GET['q'] == "":
+        return redirect('index')
+    else:
+        criteria = request.GET['q']
+        criteria = str(criteria).lower()
+        p_data = Product.objects.filter(Q(product_name__icontains=criteria) | Q(category_id__category_name=criteria))
+        content = {
+            'productData': p_data,
+            'criteria': criteria
+        }
+        return render(request, 'pages/product/product.html', content)
+
+
+def user_register(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        full_name = request.POST['full_name']
+        address = request.POST['address']
+        phone = request.POST['phone']
+        user_data = User.objects.create(username=username, email=email, password=password)
+        Buyer.objects.create(user_id=user_data.id, full_name=full_name, address=address, phone=phone)
+        login(request, user_data)
+        return redirect('index')
+    else:
+        content = {
+            'buyerForm': BuyerForm()
+        }
+        return render(request, 'pages/users/register.html', content)
+
+
+def user_login(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user_data = authenticate(username=username, password=password)
+        if user_data:
+            login(request, user_data)
+            return redirect('index')
+        else:
+            return redirect(request.META.get('HTTP_REFERER'))
+
+    else:
+        return render(request, 'pages/users/login.html')
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('index')

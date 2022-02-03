@@ -1,0 +1,15 @@
+{% extends 'master/master.html' %}
+
+{% block content %}
+
+    {% if productData.count > 0 %}
+        <ul>
+            {% for product in productData %}
+                <li>{{ product.product_name }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h1>Product not found: {{ criteria }}</h1>
+    {% endif %}
+
+{% endblock %}

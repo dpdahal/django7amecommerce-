@@ -55,3 +55,6 @@ class AdminCartProduct(admin.ModelAdmin):
 @admin.register(Order)
 class AdminProductOrder(admin.ModelAdmin):
     pass
+
+
+admin.site.register(Buyer)

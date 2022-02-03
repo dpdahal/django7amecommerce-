@@ -1,0 +1,12 @@
+{% extends 'master/master.html' %}
+
+{% block content %}
+
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ buyerForm.as_p }}
+  <button>Add record</button>
+</form>
+
+{% endblock %}
+
